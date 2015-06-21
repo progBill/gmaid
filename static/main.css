@@ -1,0 +1,24 @@
+body{
+  background-color: #ca9;
+}
+
+.earthCulture{
+  color: #999;
+}
+
+.hr_sep{
+  clear: both;
+}
+
+.gmAid__main{
+  border: thin solid black;
+  float:left;
+  padding: 5px;
+  max-width: 33%;
+}
+
+.gmAid__button{
+  float: right;
+}
+
+
