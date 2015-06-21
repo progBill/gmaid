@@ -20,7 +20,7 @@ class Database:
         self.cur = self.db.cursor()
 
     @_check_connection
-    def get_npc_base(self, params=[]):
+    def get_npc_base(self, where_clause=None):
         """gets the fundamentals for an NPC"""
 
         sql = """
@@ -29,6 +29,9 @@ class Database:
             INNER JOIN gmtools.culture b
             ON a.culture = b.id
         """
+        sql += where_clause
+
+        print sql
 
         self.cur.execute(sql)
         return self.cur.fetchall()
@@ -70,6 +73,16 @@ class Database:
             SELECT name 
             FROM places
         """
+        self.cur.execute(sql)
+        return self.cur.fetchall()
+
+    @_check_connection
+    def get_all_cultures(self):
+        """gets all the cultures in the DB"""
+        sql = """
+            SELECT id, name
+            FROM gmtools.culture
+"""
         self.cur.execute(sql)
         return self.cur.fetchall()
 

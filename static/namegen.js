@@ -4,7 +4,7 @@ angular.module('gmAid',[])
         $scope.npcGen = {};
         $scope.npcGen.getName = function(item, event){
             // call to server for name
-            var responsePromise = $http.get("/getname");
+            var responsePromise = $http.post("/getname", {"cultureFilter": $scope.npcGen.cultureFilter });
             responsePromise.success(
                 function(data, status, headers, config){
                     $scope.npcGen.nameResponse = data; 
@@ -25,8 +25,7 @@ angular.module('gmAid',[])
                     $scope.townResponse = "Error getting town name";
                 });
             var numDudes = $scope.numDudes;
-console.log(numDudes);
-            var npcResponse = $http.get("/getname/" + $scope.numDudes);
+            var npcResponse = $http.post("/getname/" + $scope.numDudes, {cultureFilter: $scope.npcGen.cultureFilter});
             npcResponse.success(function(data, status, headers, config){
                 $scope.npcGen.nameResponse = data;
             });
@@ -46,8 +45,7 @@ console.log(numDudes);
         $scope.npcGen.selectedItem = $scope.npcGen.villageSize[0];
         // set value when selectbox option is selected
         $scope.npcGen.onchange = function(id){
-            console.log(id.id);
-            $scope.numDudes = id.id;
+            $scope.numDudes = id.id * 10;
         };
 });
 

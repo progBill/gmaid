@@ -12,6 +12,12 @@
 {% raw %}
         <div ng-controller="townCrafter">
             <div class="gmAid__main">
+                <div>
+                    <label><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.angloSaxon" />Anglo-Saxon</label>
+                    <label><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.greek" />Ancient Greek</label>
+                    <label><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.byzantine" />Byzantine</label>
+                    <label><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.welch" />Welch</label>
+                </div>
                 <button ng-click="npcGen.getName(item, $event)" class="gmAid__button">Get A Name</button>
                 <hr class="hr_sep" />
                 <table ng-show="npcGen.nameResponse">

@@ -1,7 +1,7 @@
-from flask import Flask, render_template, jsonify, Blueprint
+from flask import Flask, render_template, jsonify, Blueprint, request
 from static import queries
 from random import choice, randint, sample
-from json import dumps
+from json import dumps, loads
 from npc import NPC 
 
 app = Flask(__name__)
@@ -11,15 +11,30 @@ db = queries.Database()
 def home():
     return render_template('ang.html')
 
-@app.route("/getname")
-@app.route("/getname/<numDudes>")
+@app.route("/getname", methods=['POST','GET'])
+@app.route("/getname/<numDudes>", methods=['POST','GET'])
 def getName(numDudes=10):
+
+    # set up the where clause for the culture filters
+    cultures_result = db.get_all_cultures()
+    cultures = dict((y.lower(), str(x)) for x,y in cultures_result)
+    print cultures
+    culture_clause = []
+    culture_filters = loads(request.data)
+
+    for k in culture_filters['cultureFilter'].keys():
+        if culture_filters['cultureFilter'][k] == True:
+            culture_clause.append(cultures[k])
+    culture_where = "culture IN ('" + "','".join(culture_clause) + "')"
+
+    where_clause = "WHERE {}".format(culture_where)
+
+    print where_clause
+
+    # create all the NPCs
     npc_results = []
-
-    # first, create all the NPCs
-    for npc in db.get_npc_base():
+    for npc in db.get_npc_base(where_clause):
         npc_results.append( NPC(npc[0],npc[1],npc[2],npc[3]))
-
     npcs = []
     for i in range(int(numDudes)):
         npcs.append(choice(npc_results))

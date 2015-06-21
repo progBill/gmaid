@@ -7,3 +7,4 @@ add data to tables
 create mysql dump
 
 
+when the job list is empty but there are more NPCs it errors
