@@ -21,9 +21,10 @@ def get_npc(numDudes=10):
     culture_clause = []
     culture_filters = loads(request.data)
     where_clause = ""
-    for k in culture_filters['cultureFilter'].keys():
-        if culture_filters['cultureFilter'][k] == True:
-            culture_clause.append(cultures[k])
+    if 'cultureFilter' in culture_filters:
+        for k in culture_filters['cultureFilter'].keys():
+            if culture_filters['cultureFilter'][k] == True:
+                culture_clause.append(cultures[k])
     
     if culture_clause:
         culture_where = "culture IN ('" + "','".join(culture_clause) + "')"
