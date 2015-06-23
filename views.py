@@ -13,23 +13,21 @@ def home():
 
 @app.route("/getname", methods=['POST','GET'])
 @app.route("/getname/<numDudes>", methods=['POST','GET'])
-def getName(numDudes=10):
+def get_npc(numDudes=10):
 
     # set up the where clause for the culture filters
     cultures_result = db.get_all_cultures()
     cultures = dict((y.lower(), str(x)) for x,y in cultures_result)
-    print cultures
     culture_clause = []
     culture_filters = loads(request.data)
-
+    where_clause = ""
     for k in culture_filters['cultureFilter'].keys():
         if culture_filters['cultureFilter'][k] == True:
             culture_clause.append(cultures[k])
-    culture_where = "culture IN ('" + "','".join(culture_clause) + "')"
-
-    where_clause = "WHERE {}".format(culture_where)
-
-    print where_clause
+    
+    if culture_clause:
+        culture_where = "culture IN ('" + "','".join(culture_clause) + "')"
+        where_clause = "WHERE {}".format(culture_where)
 
     # create all the NPCs
     npc_results = []
@@ -48,6 +46,7 @@ def getName(numDudes=10):
         profession_distribution.extend( [profession[4] for x in range(profession[3])] )
 
     # give jobs to the NPCs
+    # TODO: deal with what happens when there are more NPCs than jobs
     for npc in npcs:
         #get random profession based on rarity
         new_job = choice(profession_distribution)
