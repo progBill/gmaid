@@ -31,8 +31,6 @@ class Database:
         """
         sql += where_clause
 
-        print sql
-
         self.cur.execute(sql)
         return self.cur.fetchall()
 
@@ -50,7 +48,7 @@ class Database:
     def get_all_traits(self):
         """gets all personality traits"""
         sql = """
-            SELECT name 
+            SELECT name
             FROM gmtools.traits
         """
 
@@ -70,7 +68,7 @@ class Database:
     def get_all_places(self):
         """get's a town name"""
         sql = """
-            SELECT name 
+            SELECT name
             FROM places
         """
         self.cur.execute(sql)
@@ -86,12 +84,29 @@ class Database:
         self.cur.execute(sql)
         return self.cur.fetchall()
 
+    @_check_connection
+    def get_all_businesses(self):
+        """gets all places to work """
+        sql = """
+            SELECT
+                id,
+                description,
+                name,
+                pseudonyms,
+                populationBase,
+                requiredProfession
+            FROM gmtools.businesses;
+"""
+
+        self.cur.execute(sql)
+        return self.cur.fetchall()
+
+
 if __name__ == '__main__':
     db = Database()
-    print db.get_npc_base()
+    print db.get_all_businesses()
 
 #    with open('/home/bill/Documents/gaming/names') as f:
 #        names = f.readlines()
 
 #    save_name(names)
-
