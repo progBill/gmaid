@@ -15,7 +15,7 @@ angular.module('gmAid',[])
       };
       $scope.npcGen.getTown = function(item, event){
           var townResponse = $http.post("/gettown/" + $scope.numDudes,
-            {cultureFilter: $scope.npcGen.cultureFilter, size: $scope.npcGen.villageSize});
+            {cultureFilter: $scope.npcGen.cultureFilter, size: $scope.npcGen.villageSize.value});
           townResponse.success(
               function(data, status, headers, config){
                   $scope.townName = data.name;
@@ -25,6 +25,8 @@ angular.module('gmAid',[])
           townResponse.error(
               function(data, status, headers, config){
                   $scope.townName = "Error getting town name";
+                  $scope.buildings = false;
+                  $scope.nameResponse = false;
               });
       }
       // dealing with a select box

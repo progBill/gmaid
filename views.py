@@ -42,8 +42,15 @@ def getTown(numDudes=10):
     if 'size' in req_data: size = req_data['size'] * 15
 
     # get the population of the town
-    npcs = loads(get_npc( numDudes ))
-    npc_ids = npcs.keys()
+    json_npcs = loads(get_npc( numDudes ))
+    npcs = []
+    for x in json_npcs:
+        pc = json_npcs[x]
+        dude = NPC(pc['first'], pc['last'], pc['sex'], pc['culture'])
+        dude.profession = pc['profession']
+        dude.traits = pc['traits']
+        npcs.append( dude )
+
     professions = {}
     profession_distribution = []
     for profession in db.get_all_professions():
@@ -62,12 +69,9 @@ def getTown(numDudes=10):
             this_building = Building(bld.name, bld.reqPopulation, bld.requiredProfession)
 
             # get an employee for the business
-            while npc_ids[i + x] not in npcs: x = x + 1
-            worker = npcs[npc_ids[i + x]]
-            npcs.pop( npc_ids[i + x] )
-
-            worker['profession'] = professions[bld.requiredProfession]
-            this_building.worker = worker
+            worker = npcs.pop()
+            worker.profession = professions[bld.requiredProfession]
+            this_building.worker = worker.__dict__
             buildings.append(this_building)
 
     # build the final town product
@@ -79,7 +83,7 @@ def getTown(numDudes=10):
         bld[x] = y.__dict__
     retTown['buildings'] = bld
     # populate town with NPCs
-    retTown['npcs'] = npcs
+    retTown['npcs'] = [n.__dict__ for n in npcs]
     return dumps(retTown)
 
 @app.route("/getbusinesses", methods=['POST','GET'])

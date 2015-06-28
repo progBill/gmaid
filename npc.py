@@ -18,8 +18,5 @@ class NPC:
 
 if __name__ == '__main__':
     n = NPC('Bob', 'Jones', 'Male', 'American')
-
     n.professions = {'name': 'job', 'pay': 'lots'}
-
     print n
-

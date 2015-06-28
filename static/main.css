@@ -21,4 +21,8 @@ body{
   float: right;
 }
 
+.npc {
+  background-color: #DDD;
+  border: thin solid black;
 
+}

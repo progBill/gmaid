@@ -20,7 +20,8 @@
                 </div>
                 <button ng-click="npcGen.getName(item, $event)" class="gmAid__button">Get A Name</button>
                 <hr class="hr_sep" />
-                <table ng-show="nameResponse">
+                <div ng-repeat="npc in nameResponse" ng-include="'npc.html'"></div>
+<!--                <table ng-show="nameResponse">
                     <th>first</th>
                     <th>last</th>
                     <th>Sex</th>
@@ -36,6 +37,7 @@
                         <td><span ng-repeat="y in dude.traits">{{ y }}<br /></span></td>
                     </tr>
                 </table>
+              -->
             </div>
             <div class="gmAid__main">
                 <select ng-model="npcGen.selectedItem" ng-options="settlement.name for settlement in npcGen.villageSize" ng-change="npcGen.onchange(npcGen.selectedItem)"></select>
@@ -47,6 +49,16 @@
                   <li ng-repeat="building in buildings">{{ building.name }}: {{ building.worker.first }}, {{ building.worker.profession.occupation}}</li>
                 </ul>
             </div>
+            <!-- ng templates -->
+            <script type="text/ng-template" id="npc.html">
+              <div class="npc">
+                <h3>{{ npc.first}} {{ npc.last }}</h3>
+                <label class="npc__byline">{{ npc.sex }}&nbsp;{{ npc.profession.occupation }}</label>
+                <p>{{  npc.profession.description }}</p>
+              </div>
+            </script>
+
+            </script>
         </div>
 {% endraw %}
    </div>
