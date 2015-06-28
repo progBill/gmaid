@@ -20,35 +20,36 @@
                 </div>
                 <button ng-click="npcGen.getName(item, $event)" class="gmAid__button">Get A Name</button>
                 <hr class="hr_sep" />
-                <table ng-show="npcGen.nameResponse">
+                <table ng-show="nameResponse">
                     <th>first</th>
                     <th>last</th>
                     <th>Sex</th>
                     <th>profession</th>
                     <th>origin</th>
                     <th>traits</th>
-                    <tr data-ng-repeat="x in npcGen.nameResponse">
-                        <td>{{ x.first }}</td>
-                        <td>{{ x.last }}</td>
-                        <td>{{ x.sex }}</td>
-                        <td>{{ x.profession.occupation }}</td>
-                        <td class="earthCulture">{{ x.culture }}</td>
-                        <td><span ng-repeat="y in x.traits">{{ y }}<br /></span></td>
+                    <tr data-ng-repeat="dude in nameResponse">
+                        <td>{{ dude.first }}</td>
+                        <td>{{ dude.last }}</td>
+                        <td>{{ dude.sex }}</td>
+                        <td>{{ dude.profession.occupation }}</td>
+                        <td class="earthCulture">{{ dude.culture }}</td>
+                        <td><span ng-repeat="y in dude.traits">{{ y }}<br /></span></td>
                     </tr>
                 </table>
             </div>
             <div class="gmAid__main">
-                <select ng-model="npcGen.selectedItem" ng-options="settlement.name for settlement in npcGen.villageSize" ng-change="npcGen.onchange(npcGen.selectedItem)">
-                </select>
+                <select ng-model="npcGen.selectedItem" ng-options="settlement.name for settlement in npcGen.villageSize" ng-change="npcGen.onchange(npcGen.selectedItem)"></select>
+
                 <button ng-click="npcGen.getTown(item, $event)" class="gmAid__button">Get a Town Name</button>
                 <hr class="hr_sep" />
-                <p>{{townResponse}}</p>
+                <p>{{townName}}</p>
+                <ul>
+                  <li ng-repeat="building in buildings">{{ building.name }}: {{ building.worker.first }}, {{ building.worker.profession.occupation}}</li>
+                </ul>
             </div>
-        </div> 
+        </div>
 {% endraw %}
    </div>
 <script src="{{ url_for('static', filename='namegen.js') }}" type="text/javascript"></script>
 </body>
 </html>
-
-

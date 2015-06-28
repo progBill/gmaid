@@ -16,5 +16,4 @@ class Building:
 
 
 if __name__ == '__main__':
-    t = Town(1500, 'Agricultural')
-    t.get_important_businesses()
+    pass
