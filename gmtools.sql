@@ -16,6 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `businesses`
+--
+
+DROP TABLE IF EXISTS `businesses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `businesses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(2096) DEFAULT NULL,
+  `name` varchar(45) NOT NULL,
+  `pseudonyms` varchar(512) DEFAULT NULL,
+  `populationBase` int(11) NOT NULL DEFAULT '1000',
+  `requiredProfession` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_businesses_1_idx` (`requiredProfession`),
+  CONSTRAINT `fk_businesses_1` FOREIGN KEY (`requiredProfession`) REFERENCES `professions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `businesses`
+--
+
+LOCK TABLES `businesses` WRITE;
+/*!40000 ALTER TABLE `businesses` DISABLE KEYS */;
+INSERT INTO `businesses` VALUES (1,'The dead are brought and cared for here, before any furerary rites are performed.','Undertakers',NULL,250,24),(2,'Where travelers can find shelter and food for a reasonable rate. If no private rooms are available the common room usually offers shelter at low cost.','Inn',NULL,400,25),(3,'When you need new clothes, go to a seamstress for the best fit and latest fashions.','Seamstress','',950,26),(4,'Where do you keep all your stuff for shipping and recieving?  Right here.','Warehouse',NULL,150,27);
+/*!40000 ALTER TABLE `businesses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `culture`
 --
 
@@ -105,7 +135,7 @@ CREATE TABLE `professions` (
   `rarity` int(11) NOT NULL DEFAULT '5',
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +144,7 @@ CREATE TABLE `professions` (
 
 LOCK TABLES `professions` WRITE;
 /*!40000 ALTER TABLE `professions` DISABLE KEYS */;
-INSERT INTO `professions` VALUES (1,'agriculture',' ackerman',5,' plows fields for hire'),(2,'agriculture',' cowherd',5,' cow farmer'),(3,'agriculture',' crofter',5,' tender of a small farmstead'),(4,'agriculture',' dairymaid',5,' handles dairy products including bringing milk to market and crafting butter'),(5,'agriculture',' dungcarter',5,' buys and sells fertalizer'),(6,'agriculture',' farmer',5,' produces food whether plant or animal'),(7,'agriculture',' gardener',5,' tends to gardens of mostly asthetic gardens'),(8,'agriculture',' goatherd',5,' raises goats for meat and cheese'),(9,'agriculture',' hawker',5,' seller of small handicrafts and ready-to-eat handheld food'),(10,'agriculture',' hayward',5,' an official responsible for communal grazing land'),(11,'agriculture',' Herder',5,' a sometimes nomadic profession responsible for moving and caring for flocks and herds'),(12,'agriculture',' horsetrainer',5,' breaks in and trains horses'),(13,'agriculture',' ostler',5,' employed by stables inns and hostlery to look after horses'),(14,'agriculture',' plowman',5,' plows fields for hire'),(15,'agriculture',' reaper',5,' cuts and gathers crops at harvest'),(16,'agriculture',' sheepshearer',5,' cuts the wool from sheep and goats'),(17,'agriculture',' shepherd',5,' tends and rears sheep'),(18,'agriculture',' swineherd',5,' tends and rears pigs'),(19,'agriculture',' thresher',5,' separates crop from bounty like shelling peas and nuts or separating wheat from chaff'),(20,'agriculture',' tillerman',5,' steers boats and larger land vehicles (like a fire-water cart)'),(21,'agriculture',' Vintner',5,' makes and sells wine'),(22,'agriculture',' Woodcutter',5,' cuts wood from trails or makes lumber'),(23,'agriculture',' woolcomber',5,' takes raw natural fiber and produces skeins threads and cloth');
+INSERT INTO `professions` VALUES (1,'agriculture',' ackerman',5,' plows fields for hire'),(2,'agriculture',' cowherd',5,' cow farmer'),(3,'agriculture',' crofter',5,' tender of a small farmstead'),(4,'agriculture',' dairymaid',5,' handles dairy products including bringing milk to market and crafting butter'),(5,'agriculture',' dungcarter',5,' buys and sells fertalizer'),(6,'agriculture',' farmer',5,' produces food whether plant or animal'),(7,'agriculture',' gardener',5,' tends to gardens of mostly asthetic gardens'),(8,'agriculture',' goatherd',5,' raises goats for meat and cheese'),(9,'agriculture',' hawker',5,' seller of small handicrafts and ready-to-eat handheld food'),(10,'agriculture',' hayward',5,' an official responsible for communal grazing land'),(11,'agriculture',' Herder',5,' a sometimes nomadic profession responsible for moving and caring for flocks and herds'),(12,'agriculture',' horsetrainer',5,' breaks in and trains horses'),(13,'agriculture',' ostler',5,' employed by stables inns and hostlery to look after horses'),(14,'agriculture',' plowman',5,' plows fields for hire'),(15,'agriculture',' reaper',5,' cuts and gathers crops at harvest'),(16,'agriculture',' sheepshearer',5,' cuts the wool from sheep and goats'),(17,'agriculture',' shepherd',5,' tends and rears sheep'),(18,'agriculture',' swineherd',5,' tends and rears pigs'),(19,'agriculture',' thresher',5,' separates crop from bounty like shelling peas and nuts or separating wheat from chaff'),(20,'agriculture',' tillerman',5,' steers boats and larger land vehicles (like a fire-water cart)'),(21,'agriculture',' Vintner',5,' makes and sells wine'),(22,'agriculture',' Woodcutter',5,' cuts wood from trails or makes lumber'),(23,'agriculture',' woolcomber',5,' takes raw natural fiber and produces skeins threads and cloth'),(24,'service','undertaker',5,'Tends to the dead and the places the dead are kept'),(25,'service','innkeeper',5,'Tends bar, serves travellers, cleans mugs'),(26,'service','seamstress',5,'Designs and sells clothes'),(27,'service','warehouse manager',5,'runs a warehouse storing, loading, upkeeping local and imported goods ');
 /*!40000 ALTER TABLE `professions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,4 +181,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-06-23  5:30:03
+-- Dump completed on 2015-06-29  6:07:59
