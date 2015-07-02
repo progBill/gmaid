@@ -17,6 +17,9 @@ def home():
 def get_npc(numDudes=10):
     # handle request data
     req_data = loads(request.data)
+
+    print req_data
+
     culture_filters = {}
     if 'cultureFilter' in req_data:
         culture_filters = req_data['cultureFilter']
@@ -37,9 +40,9 @@ def getTown(numDudes=10):
     # handle request data
     req_data = loads(request.data)
     culture_filters = {}
-    size = 1000
+
     if 'cultureFilter' in req_data: culture_filters = req_data['cultureFilter']
-    if 'size' in req_data: size = req_data['size'] * 15
+    if 'size' in req_data: size = req_data['size'] * 10
 
     # get the population of the town
     json_npcs = loads(get_npc( numDudes ))
@@ -64,6 +67,7 @@ def getTown(numDudes=10):
     # pull out the buildings actually in our town, based on size
     buildings = []
     for i, bld in enumerate(buildings_raw):
+        #print '\nbld: {}\nsize: {}\nreqPop: {}\nnumThere: {}'.format(bld.name, size, bld.reqPopulation, size / bld.reqPopulation)
         for x in range( size / bld.reqPopulation ):
             # need to reinstantiate so each instance has its own worker
             this_building = Building(bld.name, bld.reqPopulation, bld.requiredProfession)

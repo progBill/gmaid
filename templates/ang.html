@@ -21,28 +21,10 @@
                 <button ng-click="npcGen.getName(item, $event)" class="gmAid__button">Get A Name</button>
                 <hr class="hr_sep" />
                 <div ng-repeat="npc in nameResponse" ng-include="'npc.html'"></div>
-<!--                <table ng-show="nameResponse">
-                    <th>first</th>
-                    <th>last</th>
-                    <th>Sex</th>
-                    <th>profession</th>
-                    <th>origin</th>
-                    <th>traits</th>
-                    <tr data-ng-repeat="dude in nameResponse">
-                        <td>{{ dude.first }}</td>
-                        <td>{{ dude.last }}</td>
-                        <td>{{ dude.sex }}</td>
-                        <td>{{ dude.profession.occupation }}</td>
-                        <td class="earthCulture">{{ dude.culture }}</td>
-                        <td><span ng-repeat="y in dude.traits">{{ y }}<br /></span></td>
-                    </tr>
-                </table>
-              -->
             </div>
             <div class="gmAid__main">
                 <select ng-model="npcGen.selectedItem" ng-options="settlement.name for settlement in npcGen.villageSize" ng-change="npcGen.onchange(npcGen.selectedItem)"></select>
-
-                <button ng-click="npcGen.getTown(item, $event)" class="gmAid__button">Get a Town Name</button>
+                <button ng-click="npcGen.getTown(item, $event)" class="gmAid__button">Get a Town</button>
                 <hr class="hr_sep" />
                 <p>{{townName}}</p>
                 <ul>
@@ -53,6 +35,9 @@
             <script type="text/ng-template" id="npc.html">
               <div class="npc">
                 <h3>{{ npc.first}} {{ npc.last }}</h3>
+                <ul>
+                <li ng-repeat="trait in npc.traits">{{ trait }}</li>
+                </ul>
                 <label class="npc__byline">{{ npc.sex }}&nbsp;{{ npc.profession.occupation }}</label>
                 <p>{{  npc.profession.description }}</p>
               </div>
