@@ -12,9 +12,7 @@ db = queries.Database()
 def home():
     return render_template('ang.html')
 
-@app.route("/getname", methods=['POST','GET'])
-@app.route("/getname/<numDudes>", methods=['POST','GET'])
-def get_npc(numDudes=10):
+def get_npc(numDudes):
     # handle request data
     req_data = loads(request.data)
 
@@ -54,6 +52,7 @@ def getTown(numDudes=10):
         dude.traits = pc['traits']
         npcs.append( dude )
 
+    # stuff all professions in a dict,
     professions = {}
     profession_distribution = []
     for profession in db.get_all_professions():

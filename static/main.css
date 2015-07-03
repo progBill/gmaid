@@ -6,43 +6,66 @@ body{
   color: #999;
 }
 
+.townName{
+  font-size: 2em;
+}
+
 .hr_sep{
   clear: both;
 }
 
 .gmAid__main{
+  background-color: #9ac;
   border: thin solid black;
-  float:left;
+  clear:both;
+  margin: 0 auto;
+  min-width: 33%;
+  max-width: 90%;
   padding: 5px;
+}
+
+.gmAid__main--left-col{
+  float: left;
   max-width: 33%;
 }
 
-.gmAid__button{
-  float: right;
+.gmAid__main--main-col{
+  padding-left: 100px;
+  float:left;
+  max-width: 66%;
+}
+
+.gmAid__config--col{
+  float:left;
+  width: 25%;
+}
+
+.listless{
+  list-style: none;
 }
 
 .npc {
   background-color: #DDD;
   border: thin solid black;
-
+  padding: 5px;
 }
+
+.npc__byline{
+  float:right;
+}
+.npc__deets{
+  background-color: #BBB;
+  min-width: 100px;
+  max-width: 500px;
+  padding: 3px;
+  position:absolute;
+}
+.npc__name{
+  font-size: 16pt;
+}
+
 
 
 ////////////////
 //   TESTING  //
 ////////////////
-
-.sample-show-hide {
-  padding:10px;
-  border:1px solid black;
-  background:white;
-}
-
-.sample-show-hide {
-  -webkit-transition:all linear 0.5s;
-  transition:all linear 0.5s;
-}
-
-.sample-show-hide.ng-hide {
-  opacity:0;
-}

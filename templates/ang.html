@@ -8,45 +8,54 @@
 <link rel="stylesheet" href="static/main.css">
 </head>
 <body>
-    <div ng-app="gmAid">
+  <div ng-app="gmAid">
 {% raw %}
-        <div ng-controller="townCrafter">
-            <div class="gmAid__main">
-                <div>
-                    <label><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.angloSaxon" />Anglo-Saxon</label>
-                    <label><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.greek" />Ancient Greek</label>
-                    <label><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.byzantine" />Byzantine</label>
-                    <label><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.welch" />Welch</label>
-                </div>
-                <button ng-click="npcGen.getName(item, $event)" class="gmAid__button">Get A Name</button>
-                <hr class="hr_sep" />
-                <div ng-repeat="npc in nameResponse" ng-include="'npc.html'"></div>
-            </div>
-            <div class="gmAid__main">
-                <select ng-model="npcGen.selectedItem" ng-options="settlement.name for settlement in npcGen.villageSize" ng-change="npcGen.onchange(npcGen.selectedItem)"></select>
-                <button ng-click="npcGen.getTown(item, $event)" class="gmAid__button">Get a Town</button>
-                <hr class="hr_sep" />
-                <p>{{townName}}</p>
-                <ul>
-                  <li ng-repeat="building in buildings">{{ building.name }}: {{ building.worker.first }}, {{ building.worker.profession.occupation}}</li>
-                </ul>
-            </div>
-            <!-- ng templates -->
-            <script type="text/ng-template" id="npc.html">
-              <div class="npc">
-                <h3>{{ npc.first}} {{ npc.last }}</h3>
-                <ul>
-                <li ng-repeat="trait in npc.traits">{{ trait }}</li>
-                </ul>
-                <label class="npc__byline">{{ npc.sex }}&nbsp;{{ npc.profession.occupation }}</label>
-                <p>{{  npc.profession.description }}</p>
-              </div>
-            </script>
-
-            </script>
-        </div>
+  <div ng-controller="townCrafter">
+      <div class="gmAid__config">
+        <div class="gmAid__config--col">
+          <ul class="listless">
+            <li><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.angloSaxon" />Anglo-Saxon</li>
+            <li><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.greek" />Ancient Greek</li>
+            <li><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.byzantine" />Byzantine</li>
+            <li><input type="checkbox" name="cultureFilter" ng-model="npcGen.cultureFilter.welch" />Welch</li>
+          </ul>
+      </div>
+      <div class="gmAid__config--col">
+        <select ng-model="npcGen.selectedItem" ng-options="settlement.name for settlement in npcGen.villageSize" ng-change="npcGen.onchange(npcGen.selectedItem)"></select>
+        <br />
+        <button ng-click="npcGen.getTown(item, $event)" class="gmAid__button">Generate a Town</button>
+      </div>
+    </div>
+    <div class="gmAid__main">
+      <span class="townName">{{townName}}</span><br />
+      <div class="gmAid__main--left-col">
+        <ul class="listless">
+          <li ng-repeat="building in buildings">
+            {{ building.name }}<div ng-init="npc=building.worker" ng-include="'npc.html'"></div>
+          </li>
+        </ul>
+      </div>
+      <div class="gmAid__main--main-col">
+        <div ng-repeat="npc in nameResponse" ng-include="'npc.html'"></div>
+      </div>
+    <div style="clear:both"></div>
+    </div>
+    <!-- ng templates -->
+    <script type="text/ng-template" id="npc.html">
+    <div class="npc" ng-mouseover="$this.status.hovering=true" ng-mouseout="$this.status.hovering=false">
+      <span class="npc__name">{{ npc.first}} {{ npc.last }}</span>
+      <span class="npc__byline">{{ npc.sex }}&nbsp;{{ npc.profession.occupation }}</span>
+    </div>
+    <span class="npc__deets" ng-show="$this.status.hovering">
+      <ul class="listless">
+        <li ng-repeat="trait in npc.traits">{{ trait }}</li>
+      </ul>
+      <p>{{  npc.profession.description }}</p>
+    </span>
+    </script>
+  </div>
 {% endraw %}
-   </div>
+ </div>
 <script src="{{ url_for('static', filename='namegen.js') }}" type="text/javascript"></script>
 </body>
 </html>
