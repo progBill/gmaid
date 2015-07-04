@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.43, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: gmtools
+-- Host: localhost    Database: gmaids
 -- ------------------------------------------------------
 -- Server version	5.5.43-0ubuntu0.14.04.1
 

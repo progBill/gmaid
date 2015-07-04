@@ -14,6 +14,12 @@ body{
   clear: both;
 }
 
+.building{
+  font-size: 12pt;
+}
+
+
+
 .gmAid__main{
   background-color: #9ac;
   border: thin solid black;
@@ -37,7 +43,7 @@ body{
 
 .gmAid__config--col{
   float:left;
-  width: 25%;
+  width: 15%;
 }
 
 .listless{

@@ -15,9 +15,6 @@ def home():
 def get_npc(numDudes):
     # handle request data
     req_data = loads(request.data)
-
-    print req_data
-
     culture_filters = {}
     if 'cultureFilter' in req_data:
         culture_filters = req_data['cultureFilter']
@@ -38,6 +35,8 @@ def getTown(numDudes=10):
     # handle request data
     req_data = loads(request.data)
     culture_filters = {}
+
+    print req_data
 
     if 'cultureFilter' in req_data: culture_filters = req_data['cultureFilter']
     if 'size' in req_data: size = req_data['size'] * 10
