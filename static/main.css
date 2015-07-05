@@ -18,7 +18,9 @@ body{
   font-size: 12pt;
 }
 
-
+.building__name{
+  font-size: 16pt;
+}
 
 .gmAid__main{
   background-color: #9ac;

@@ -1,6 +1,6 @@
 from flask import (Flask, render_template, request)
 from static import queries
-from random import choice, randrange
+from random import (choice, randrange, sample)
 from json import dumps, loads
 from npc import NPC
 from Building import Building
@@ -12,23 +12,6 @@ db = queries.Database()
 def home():
     return render_template('ang.html')
 
-def get_npc(numDudes):
-    # handle request data
-    req_data = loads(request.data)
-    culture_filters = {}
-    if 'cultureFilter' in req_data:
-        culture_filters = req_data['cultureFilter']
-    blank_npcs = assemble_npc_list(numDudes, culture_filters)
-    npcs = jobs_for_npcs(blank_npcs)
-    # give traits to NPCs
-    traits = db.get_all_traits()
-    for npc in npcs:
-        npc.traits = [choice(traits)[0], choice(traits)[0], choice(traits)[0]]
-
-    # figure out how to jsonify the list of NPCs
-    npc_return = '{' + ','.join([ '"' + str(x) + '":' + y.__str__() for x, y in enumerate(npcs)]) + '}'
-    return npc_return
-
 @app.route("/gettown")
 @app.route("/gettown/<numDudes>", methods=['POST','GET'])
 def getTown(numDudes=10):
@@ -36,22 +19,16 @@ def getTown(numDudes=10):
     req_data = loads(request.data)
     culture_filters = {}
 
-    print req_data
+    print "~~~~~~~~~~~~~~~~~~~~~\n%s\n###############" % req_data
 
     if 'cultureFilter' in req_data: culture_filters = req_data['cultureFilter']
-    if 'size' in req_data: size = req_data['size'] * 10
+    if 'size' in req_data: size = int(req_data['size']) * 10
 
     # get the population of the town
-    json_npcs = loads(get_npc( numDudes ))
-    npcs = []
-    for x in json_npcs:
-        pc = json_npcs[x]
-        dude = NPC(pc['first'], pc['last'], pc['sex'], pc['culture'])
-        dude.profession = pc['profession']
-        dude.traits = pc['traits']
-        npcs.append( dude )
+    blank_npcs = assemble_npc_list(numDudes, culture_filters)
+    npcs = jobs_for_npcs(blank_npcs)
 
-    # stuff all professions in a dict,
+    # stuff all professions in a dict, to assign to NPCs when the building is created
     professions = {}
     profession_distribution = []
     for profession in db.get_all_professions():
@@ -92,7 +69,6 @@ def getTown(numDudes=10):
 def get_businesses():
     return dumps({"businesses":db.get_all_businesses()})
 
-
 ################################
 #  Utility functions
 ################################
@@ -120,6 +96,12 @@ def assemble_npc_list(numDudes, culture_filters):
     for i in range(int(numDudes)):
         npcs.append(choice(npc_results))
 
+    # give traits to NPCs
+    traits = [x[0] for x in db.get_all_traits()]
+    print traits
+    for npc in npcs:
+        npc.traits = sample(traits, 3)
+
     return npcs
 
 def jobs_for_npcs(npcs):
@@ -132,16 +114,17 @@ def jobs_for_npcs(npcs):
         profession_distribution.extend( [profession[4] for x in range(profession[3])] )
 
     # give jobs to the NPCs
-    # TODO: deal with what happens when there are more NPCs than jobs
+    # TODO: deal with what happens when there are more jobs than NPCs
     for npc in npcs:
-        #get random profession based on rarity
-        new_job = choice(profession_distribution)
-        # lower the chances of getting the same job again
-        for x in range(2):
-            if new_job in profession_distribution:
-                profession_distribution.remove(new_job)
-        #assign profession to NPC
-        npc.profession = professions[new_job]
+        if len(profession_distribution) > 0: # not an ideal solution, but avoids errors for now
+            #get random profession based on rarity
+            new_job = choice(profession_distribution)
+            # lower the chances of getting the same job again
+            for x in range(2):
+                if new_job in profession_distribution:
+                    profession_distribution.remove(new_job)
+            #assign profession to NPC
+            npc.profession = professions[new_job]
 
     return npcs
 
