@@ -16,7 +16,7 @@ class Database:
         return checker
 
     def connect(self):
-        self.db = MySQLdb.connect(user='bill',db='gmtools')
+        self.db = MySQLdb.connect(user='billebeling', passwd='quarters25',host='mysql.classicalthinkers.org',db='gmaids')
         self.cur = self.db.cursor()
 
     @_check_connection
@@ -25,8 +25,8 @@ class Database:
 
         sql = """
             SELECT a.first, a.last, a.sex, b.name
-            FROM gmtools.names a
-            INNER JOIN gmtools.culture b
+            FROM gmaids.names a
+            INNER JOIN gmaids.culture b
             ON a.culture = b.id
         """
         sql += where_clause
@@ -39,7 +39,7 @@ class Database:
         """gets professions based on parameters"""
         sql = """
             SELECT occupation, description, category, rarity, id
-            FROM gmtools.professions
+            FROM gmaids.professions
         """
         self.cur.execute(sql)
         return self.cur.fetchall()
@@ -49,7 +49,7 @@ class Database:
         """gets all personality traits"""
         sql = """
             SELECT name
-            FROM gmtools.traits
+            FROM gmaids.traits
         """
 
         self.cur.execute(sql)
@@ -79,7 +79,7 @@ class Database:
         """gets all the cultures in the DB"""
         sql = """
             SELECT id, name
-            FROM gmtools.culture
+            FROM gmaids.culture
 """
         self.cur.execute(sql)
         return self.cur.fetchall()
@@ -95,7 +95,7 @@ class Database:
                 pseudonyms,
                 populationBase,
                 requiredProfession
-            FROM gmtools.businesses;
+            FROM gmaids.businesses;
 """
 
         self.cur.execute(sql)

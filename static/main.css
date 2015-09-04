@@ -20,6 +20,7 @@ body{
 
 .building__name{
   font-size: 16pt;
+  text-transform: capitalize;
 }
 
 .gmAid__main{
